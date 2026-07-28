@@ -1,73 +1,87 @@
-# ProjectXApp - English Dictionary
-
-## 🌐 Live Preview
-[![Live Preview](](https://rajath2005.github.io/ProjectXApp.github.io/)
+# EnglishO Platform
 
 ## 📚 About
-ProjectXApp is an interactive **English Dictionary** web application designed to help users find word meanings, pronunciations, and example sentences easily. With a user-friendly interface, animated transitions, and a search history feature, it provides a seamless experience for learners and enthusiasts.
+**EnglishO** is an interactive, gamified English learning platform designed to help users master vocabulary, pronunciation, and reading comprehension. With a modern, component-based user interface, animated transitions, and AI-driven insights, it provides a seamless and engaging experience for learners of all ages.
 
 ## 🎯 Features
-- **🔍 Search Functionality:** Users can type a word and get its meaning, example sentences, and pronunciation.
-- **🎤 Pronunciation Support:** Audio feature to listen to word pronunciations.
-- **📝 Search History:** Stores previously searched words for easy reference.
-- **🌟 Animated UI:** Smooth scroll animations for better user experience.
-- **📱 Mobile Responsive:** Works seamlessly across different screen sizes.
-- **🖼️ Engaging Design:** Custom fonts, icons, and a visually appealing interface.
-- **🌍 Navigation Menu:** Easy access to Home, Services, About, and Contact pages.
+- **🔍 AI Dictionary Search:** Search for words to get instant meanings, example sentences, and phonetic breakdowns.
+- **🎮 Gamified Quizzes:** Dynamic, image-based quizzes with active recall, streaks, and randomized answer layouts.
+- **🃏 Visual Alphabet Flashcards:** Interactive 3D flashcards featuring randomized A-Z learning to build foundational vocabulary.
+- **🎤 Speech & Text Analysis:** Integrated tools for reading comprehension and speaking practice.
+- **📊 Session & Progress Tracking:** Tracks daily streaks and XP through local session management.
+- **🌟 Premium UI/UX:** Built with a cohesive design system, glassmorphism elements, CSS grids, and smooth micro-animations.
+- **📱 Responsive Layout:** Works seamlessly across desktops, tablets, and mobile devices.
 
-## 🚀 How to Use
-1. **Visit the Live Demo:** [ProjectXApp](https://rajath2005.github.io/ProjectXApp.github.io/)
-2. **Search for a Word:** Enter a word in the search bar and press Enter.
-3. **View Meaning & Examples:** The app will display the definition, example sentence, and pronunciation.
-4. **Listen to Pronunciation:** Click the audio button to hear the correct pronunciation.
-5. **Check Search History:** Previous searches are saved for quick reference.
-6. **Navigate the Site:** Use the menu to explore other sections like Services and About.
+## 🚀 How to Run Locally
+
+This project uses **Parcel** as its web application bundler to manage assets, components, and modular JavaScript.
+
+### Prerequisites
+Make sure you have [Node.js](https://nodejs.org/) installed on your machine.
+
+### Installation
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/Rithesh0115/Englisho.io.git
+   cd Englisho.io
+   ```
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+### Development Server
+To start the local development server, run:
+```bash
+npm start
+```
+*This will spin up a local server (usually at `http://localhost:1234`). Parcel will automatically bundle your files and refresh the page when you make changes.*
+
+### Production Build
+To create a minimized, production-ready build of the application:
+```bash
+npm run build
+```
+*This will output the optimized files into the `dist/` folder, ready for deployment.*
 
 ## 🛠️ Technologies Used
-- **Frontend:** HTML, CSS, JavaScript
-- **Fonts:** Google Fonts (Fugaz One, Basic, Poppins, Nunito)
-- **Animations:** CSS Transitions & JavaScript Scroll Animations
+- **Core:** HTML5, CSS3, Vanilla JavaScript (ES6 Modules)
+- **Bundler:** Parcel (v2)
+- **Architecture:** Component-based UI (Reusable Navbar/Footer modules)
+- **Data:** JSON-driven curriculum and Base64 SVG inline assets
+- **Styling:** Custom CSS variables (Design Tokens), Flexbox, CSS Grid
 
 ## 📂 File Structure
 ```
-ProjectXApp.github.io/
-│── index.html         # Main home page
-│── index1.html        # Dictionary interface page
-│── service.html       # Services section
-│── about.html         # About us page
-│── contact.html       # Contact information page
-│── index1.js          # JavaScript for dictionary functionality
-│── global1.css        # Global styles
-│── index.css          # Main stylesheet
-│── assets/            # Images, icons, and fonts
-│── Logo.jpeg          # Website logo
-│── arrowbackwardcircle.svg # Skip button icon
+Englisho.io/
+├── src/
+│   ├── assets/             # Global icons and images
+│   ├── data/               # curriculum.json and images.js (SVGs)
+│   ├── pages/              # Categorized HTML views
+│   │   ├── auth/           # Sign-in, sign-up, child registration
+│   │   ├── core/           # Dictionary and role selection
+│   │   ├── features/       # Quizzes, flashcards, dashboard, speech, text
+│   │   └── info/           # About, contact, services
+│   ├── scripts/            # Modular JavaScript
+│   │   ├── components/     # Reusable UI modules (Navbar.js, Footer.js)
+│   │   ├── pages/          # Page-specific logic scripts
+│   │   ├── services/       # Core business logic (GamificationService.js, etc.)
+│   │   └── utils/          # Helper utilities
+│   ├── styles/             
+│   │   └── global.css      # Design system and global styles
+│   └── index.html          # Main landing page
+├── .gitignore              # Ignored generated folders (node_modules, dist, etc.)
+├── package.json            # NPM dependencies and scripts
+└── README.md               # Documentation
 ```
 
-## 🗄 Screenshots
-![Homepage](image.png)
-![Dictionary Search](image1.png)
-
-## 📌 Future Enhancements
-- 🔄 **Dark Mode Support**
-- 📝 **User Account for Saving Favorites**
-- 🌎 **Multi-Language Support**
-- 📊 **Word Usage Statistics**
-
 ## 🤝 Contributing
-Contributions are welcome! If you’d like to improve this project, follow these steps:
+Contributions are welcome! If you’d like to improve this project:
 1. **Fork the Repository**
-2. **Clone the Forked Repo**: `git clone https://github.com/your-username/ProjectXApp.github.io.git`
-3. **Create a New Branch**: `git checkout -b feature-branch`
-4. **Make Your Changes & Commit**
-5. **Push to Your Fork**: `git push origin feature-branch`
-6. **Create a Pull Request**
-
-## 📞 Contact
-For any queries, feel free to reach out:
-- **Email:** rajathajeru@gmail.com
-- **GitHub:** [Rajath2005](https://github.com/Rajath2005)
-- **Website:** [ProjectXApp](https://rajath2005.github.io/ProjectXApp.github.io/)
+2. **Create a New Branch**: `git checkout -b feature-branch`
+3. **Make Your Changes & Commit**: `git commit -m "feat: adding new feature"`
+4. **Push to Your Fork**: `git push origin feature-branch`
+5. **Create a Pull Request**
 
 ---
-🚀 **Explore the World of Words with ProjectXApp!** 🚀
+🚀 **Master English with AI Intelligence on EnglishO!** 🚀
