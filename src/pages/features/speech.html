@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Focus Recording Mode - EnglishO</title>
+    <link rel="stylesheet" href="~/src/styles/global.css">
+    <style>
+        .recording-workspace {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: calc(100vh - 120px);
+            text-align: center;
+        }
+
+        .mic-container {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+
+        .mic-btn {
+            position: relative;
+            z-index: 10;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--clr-primary);
+            color: white;
+            border: none;
+            font-size: 2.5rem;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mic-btn:hover {
+            transform: scale(1.05);
+            background: var(--clr-primary-hover);
+        }
+
+        .mic-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--clr-primary);
+            opacity: 0;
+            z-index: 1;
+        }
+
+        .mic-btn.recording ~ .mic-ring {
+            animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+        
+        .mic-btn.recording {
+            background: var(--clr-danger);
+        }
+        .mic-btn.recording ~ .mic-ring {
+            background: var(--clr-danger);
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+            100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; }
+        }
+
+        .transcript-box {
+            width: 100%;
+            max-width: 800px;
+            min-height: 200px;
+            background: var(--clr-surface);
+            border: 1px solid var(--clr-border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            font-size: 1.5rem;
+            line-height: 1.6;
+            color: var(--clr-text);
+            box-shadow: var(--shadow-sm);
+            text-align: left;
+            position: relative;
+            transition: border-color 0.3s;
+        }
+
+        .transcript-box.active {
+            border-color: var(--clr-primary-light);
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+        }
+
+        .mock-confidence {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--clr-success);
+            color: white;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .transcript-box.active .mock-confidence {
+            opacity: 1;
+        }
+
+    </style>
+</head>
+<body class="flex-col min-h-screen">
+
+    <div class="mesh-bg"></div>
+
+    <englisho-navbar></englisho-navbar>
+
+    <main class="container flex-1 animate-fade-up">
+        
+        <div class="recording-workspace">
+            
+            <div class="mic-container">
+                <button class="mic-btn" id="start-btn" onclick="startConverting();">
+                    🎙️
+                </button>
+                <div class="mic-ring"></div>
+            </div>
+
+            <h2 class="text-muted" style="margin-bottom: 2rem; font-weight: 500; font-size: 1.25rem;">Click the microphone to start transcribing.</h2>
+
+            <div class="transcript-box" id="transcript-box">
+                <div class="mock-confidence">AI Confidence: High</div>
+                <div id="result" style="min-height: 150px;">
+                    <!-- Transcribed text goes here -->
+                    <span style="color: var(--clr-text-muted); opacity: 0.5;">Transcription will appear here in real-time...</span>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <script>
+        var result = document.getElementById('result');
+        var btn = document.getElementById('start-btn');
+        var box = document.getElementById('transcript-box');
+  
+        function startConverting() {
+            btn.classList.add('recording');
+            box.classList.add('active');
+            
+            if ('webkitSpeechRecognition' in window) {
+                var speechRecognizer = new webkitSpeechRecognition();
+                speechRecognizer.continuous = true;
+                speechRecognizer.interimResults = true;
+                speechRecognizer.lang = 'en-US';
+                speechRecognizer.start();
+
+                var finalTranscripts = '';
+                
+                // Clear initial placeholder
+                result.innerHTML = '';
+
+                speechRecognizer.onresult = function(event) {
+                    var interimTranscripts = '';
+                    for (var i = event.resultIndex; i < event.results.length; i++) {
+                        var transcript = event.results[i][0].transcript;
+                        transcript = transcript.replace("\n", "<br>");
+                        if (event.results[i].isFinal) {
+                            finalTranscripts += transcript;
+                        } else {
+                            interimTranscripts += transcript;
+                        }
+                    }
+                    result.innerHTML = finalTranscripts + '<span style="color: var(--clr-primary);">' + interimTranscripts + '</span>';
+                };
+                
+                speechRecognizer.onend = function() {
+                    btn.classList.remove('recording');
+                    box.classList.remove('active');
+                };
+                
+                speechRecognizer.onerror = function(event) {
+                    console.error("Speech error", event);
+                    btn.classList.remove('recording');
+                    box.classList.remove('active');
+                };
+            } else {
+                result.innerHTML = '<span style="color: var(--clr-danger);">Your browser is not supported. Please use Google Chrome!</span>';
+            }
+        }
+    </script>
+<script type="module" src="~/src/scripts/components/Navbar.js"></script>
+    <script type="module" src="~/src/scripts/components/Footer.js"></script>
+</body>
+</html>
+

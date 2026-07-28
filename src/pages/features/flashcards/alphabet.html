@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gamified Alphabet - EnglishO</title>
+    <link rel="stylesheet" href="~/src/styles/global.css">
+    <style>
+        .flashcard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: var(--space-xl);
+            padding: var(--space-xl) 0;
+            perspective: 1200px;
+        }
+        
+        .flashcard-scene {
+            width: 100%;
+            aspect-ratio: 1;
+            perspective: 1000px;
+        }
+
+        .flashcard {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+            border-radius: var(--radius-lg);
+        }
+
+        .flashcard-scene:hover .flashcard {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: var(--clr-surface);
+            border: 2px solid var(--clr-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .flashcard-front img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .flashcard-back {
+            transform: rotateY(180deg);
+            background: var(--clr-primary-light);
+            color: var(--clr-primary);
+            border-color: var(--clr-primary);
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+
+        .flashcard-back h2 {
+            font-size: 3rem;
+            margin: 0;
+        }
+
+        .badge-xp {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: var(--clr-warning);
+            color: white;
+            padding: 4px 8px;
+            border-radius: var(--radius-full);
+            font-weight: 800;
+            font-size: 0.8rem;
+            box-shadow: var(--shadow-md);
+            z-index: 10;
+            transform: scale(0);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .flashcard-scene:hover .badge-xp {
+            transform: scale(1);
+        }
+    </style>
+</head>
+<body class="flex-col min-h-screen">
+
+    <div class="mesh-bg"></div>
+
+    <englisho-navbar></englisho-navbar>
+
+    <main class="container flex-1 py-xl animate-fade-up">
+        
+        <div class="text-center mb-lg">
+            <h1 style="font-size: 2.5rem; color: var(--clr-text); margin-bottom: 0.5rem;">Visual Alphabet</h1>
+            <p class="text-muted">Hover over cards to flip them and earn XP.</p>
+        </div>
+
+        <div id="flashcard-container" class="flashcard-grid">
+            <!-- Flashcards injected by JS -->
+        </div>
+        
+    </main>
+
+    <englisho-footer></englisho-footer>
+
+    <script type="module">
+        import { GamificationService } from '~/src/scripts/services/GamificationService.js';
+        import curriculumData from '~/src/data/curriculum.json';
+        import { imageMap } from '~/src/data/images.js';
+        
+        const container = document.getElementById('flashcard-container');
+        // Shuffle the flashcards array randomly as requested
+        const flashcards = [...curriculumData.flashcards].sort(() => Math.random() - 0.5);
+        
+        flashcards.forEach((item, i) => {
+            const scene = document.createElement('div');
+            scene.className = 'flashcard-scene animate-fade-up';
+            scene.style.animationDelay = `${(i % 10) * 0.05}s`;
+            
+            const card = document.createElement('div');
+            card.className = 'flashcard';
+
+            const xpBadge = document.createElement('div');
+            xpBadge.className = 'badge-xp';
+            xpBadge.innerText = '+5 XP';
+            scene.appendChild(xpBadge);
+
+            const front = document.createElement('div');
+            front.className = 'flashcard-face flashcard-front';
+            const img = document.createElement('img');
+            img.src = imageMap[item.image] || imageMap.logo;
+            img.alt = item.word;
+            img.loading = "lazy";
+            img.onerror = function() {
+                this.src = imageMap.logo;
+            };
+            front.appendChild(img);
+
+            const back = document.createElement('div');
+            back.className = 'flashcard-face flashcard-back';
+            back.innerHTML = `<h2>${item.letter}</h2>
+                              <p style="font-size:1.2rem; font-weight: 600; margin-bottom: 0.5rem;">${item.word}</p>
+                              <button class="btn btn-outline" 
+                                onclick="event.stopPropagation(); window.speechSynthesis.cancel(); window.speechSynthesis.speak(new SpeechSynthesisUtterance('${item.word}'));"
+                                style="border-radius: var(--radius-full); padding: 0.25rem 1rem;">🔊 Listen</button>`;
+
+            card.appendChild(front);
+            card.appendChild(back);
+            scene.appendChild(card);
+            container.appendChild(scene);
+
+            // Gamification hook
+            scene.addEventListener('mouseenter', function onHover() {
+                GamificationService.addXP(5);
+                scene.removeEventListener('mouseenter', onHover); // Award XP only once per session
+            });
+        });
+    </script>
+    <script type="module" src="~/src/scripts/components/Navbar.js"></script>
+    <script type="module" src="~/src/scripts/components/Footer.js"></script>
+</body>
+</html>

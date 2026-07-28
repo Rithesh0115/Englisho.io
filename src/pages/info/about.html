@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Methodology - EnglishO</title>
+    <link rel="stylesheet" href="~/src/styles/global.css">
+    <style>
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-lg);
+            margin-top: var(--space-xl);
+        }
+
+        .team-card {
+            background: var(--clr-surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--clr-border);
+            padding: var(--space-xl) var(--space-lg);
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+        }
+
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .team-avatar {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto var(--space-md);
+            border: 4px solid var(--clr-surface);
+            box-shadow: 0 0 0 2px var(--clr-primary-light);
+        }
+
+        .team-role {
+            color: var(--clr-primary);
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: var(--space-sm);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-sm);
+            margin-top: var(--space-md);
+        }
+
+        .social-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--clr-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--clr-border);
+            transition: all 0.2s;
+        }
+
+        .social-btn:hover {
+            background: var(--clr-primary-light);
+            border-color: var(--clr-primary);
+        }
+
+        .social-btn img {
+            width: 18px;
+            height: 18px;
+            opacity: 0.7;
+        }
+        
+        .social-btn:hover img {
+            opacity: 1;
+        }
+
+        @media (max-width: 900px) {
+            .team-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 600px) {
+            .team-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body class="flex-col min-h-screen">
+    <div class="mesh-bg"></div>
+
+    <englisho-navbar></englisho-navbar>
+
+    <main class="container flex-1 py-xl animate-fade-up">
+        
+        <div class="text-center mb-xl" style="max-width: 700px; margin: 0 auto;">
+            <h1 style="font-size: 3.5rem; letter-spacing: -0.03em; margin-bottom: 1rem;">The EnglishO Vision</h1>
+            <p class="text-muted" style="font-size: 1.25rem;">We are fundamentally reimagining how people learn English by combining cognitive science with advanced artificial intelligence.</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-xl); margin-bottom: 5rem;">
+            <div style="background: var(--clr-surface); padding: var(--space-xl); border-radius: var(--radius-lg); border: 1px solid var(--clr-border);">
+                <div style="width: 50px; height: 50px; background: var(--clr-primary-light); color: var(--clr-primary); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 1rem;">🧠</div>
+                <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">AI-First Learning</h3>
+                <p class="text-muted">Instead of static textbooks, our platform adapts to your pace in real-time, providing instant phonetic breakdowns and conversational context through AI.</p>
+            </div>
+            <div style="background: var(--clr-surface); padding: var(--space-xl); border-radius: var(--radius-lg); border: 1px solid var(--clr-border);">
+                <div style="width: 50px; height: 50px; background: var(--clr-success-bg); color: var(--clr-success); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 1rem;">⚡</div>
+                <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Active Recall</h3>
+                <p class="text-muted">We utilize spaced repetition and interactive 3D flashcards to force cognitive engagement, moving vocabulary from short-term to long-term memory faster.</p>
+            </div>
+            <div style="background: var(--clr-surface); padding: var(--space-xl); border-radius: var(--radius-lg); border: 1px solid var(--clr-border);">
+                <div style="width: 50px; height: 50px; background: #fef3c7; color: #d97706; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 1rem;">🎮</div>
+                <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Gamified Habit Building</h3>
+                <p class="text-muted">Consistency is the key to fluency. By implementing streaks, XP, and daily goals, we transform the arduous task of learning into an addictive daily habit.</p>
+            </div>
+        </div>
+
+        <div class="text-center mb-xl" style="max-width: 700px; margin: 0 auto; padding-top: 3rem; border-top: 1px solid var(--clr-border);">
+            <h1 style="font-size: 2.5rem; letter-spacing: -0.03em; margin-bottom: 1rem;">The Engineering Team</h1>
+            <p class="text-muted" style="font-size: 1.25rem;">Meet the core engineers and product designers behind Binary Explorers who crafted the EnglishO learning experience.</p>
+        </div>
+
+        <div class="team-grid">
+            <!-- Team Member 1 -->
+            <div class="team-card">
+                <img src="~/src/assets/images/Rajath1.jpeg" alt="Rajath" class="team-avatar" onerror="this.src='~/src/assets/images/Logo.jpeg'">
+                <h3 style="font-size: 1.25rem; margin-bottom: 0.25rem;">Rajath Kiran A</h3>
+                <div class="team-role">Lead Engineer</div>
+                <div class="social-links">
+                    <a href="mailto:rajathajeru@gmail.com" class="social-btn"><img src="~/src/assets/images/gmail-logo.png" alt="Email"></a>
+                    <a href="https://github.com/Rajath2005" target="_blank" class="social-btn"><img src="~/src/assets/images/github.png" alt="GitHub"></a>
+                    <a href="https://www.linkedin.com/in/rajath-kiran/" target="_blank" class="social-btn"><img src="~/src/assets/images/linkedin.png" alt="LinkedIn"></a>
+                </div>
+            </div>
+
+            <!-- Team Member 2 -->
+            <div class="team-card">
+                <img src="~/src/assets/images/Rithesh.jpeg" alt="Rithesh" class="team-avatar" onerror="this.src='~/src/assets/images/Logo.jpeg'">
+                <h3 style="font-size: 1.25rem; margin-bottom: 0.25rem;">Rithesh</h3>
+                <div class="team-role">Frontend Architect</div>
+                <div class="social-links">
+                    <a href="mailto:Onceupontime550@gmail.com.com" class="social-btn"><img src="~/src/assets/images/gmail-logo.png" alt="Email"></a>
+                    <a href="https://github.com/Rithesh15" target="_blank" class="social-btn"><img src="~/src/assets/images/github.png" alt="GitHub"></a>
+                    <a href="https://www.linkedin.com/in/rithesh-k-7b22842b7" target="_blank" class="social-btn"><img src="~/src/assets/images/linkedin.png" alt="LinkedIn"></a>
+                </div>
+            </div>
+
+            <!-- Team Member 3 -->
+            <div class="team-card">
+                <img src="~/src/assets/images/Sanath.jpeg" alt="Sanath" class="team-avatar" onerror="this.src='~/src/assets/images/Logo.jpeg'">
+                <h3 style="font-size: 1.25rem; margin-bottom: 0.25rem;">Sanath K</h3>
+                <div class="team-role">Backend Engineer</div>
+                <div class="social-links">
+                    <a href="mailto:sanathk00007@gmail.com" class="social-btn"><img src="~/src/assets/images/gmail-logo.png" alt="Email"></a>
+                    <a href="https://github.com/Sanath00007" target="_blank" class="social-btn"><img src="~/src/assets/images/github.png" alt="GitHub"></a>
+                    <a href="https://www.linkedin.com/in/sanath-kondalakana-b69369291" target="_blank" class="social-btn"><img src="~/src/assets/images/linkedin.png" alt="LinkedIn"></a>
+                </div>
+            </div>
+
+            <!-- Team Member 4 -->
+            <div class="team-card">
+                <img src="~/src/assets/images/Shrinidhi.jpeg" alt="Shrinidhi" class="team-avatar" onerror="this.src='~/src/assets/images/Logo.jpeg'">
+                <h3 style="font-size: 1.25rem; margin-bottom: 0.25rem;">Shrinidhi K V</h3>
+                <div class="team-role">Product Designer</div>
+                <div class="social-links">
+                    <a href="mailto:bhatshkvpy@gmail.com" class="social-btn"><img src="~/src/assets/images/gmail-logo.png" alt="Email"></a>
+                    <a href="https://github.com/Shrinidhi516" target="_blank" class="social-btn"><img src="~/src/assets/images/github.png" alt="GitHub"></a>
+                    <a href="https://www.linkedin.com/in/shrinidhi-k-v-794653290" target="_blank" class="social-btn"><img src="~/src/assets/images/linkedin.png" alt="LinkedIn"></a>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <englisho-footer></englisho-footer>
+
+<script type="module" src="~/src/scripts/components/Navbar.js"></script>
+    <script type="module" src="~/src/scripts/components/Footer.js"></script>
+</body>
+</html>
+

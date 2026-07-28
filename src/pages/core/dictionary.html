@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Dictionary - EnglishO</title>
+    <link rel="stylesheet" href="~/src/styles/global.css">
+    <style>
+        .ai-search-container {
+            max-width: 800px;
+            margin: 4rem auto;
+            text-align: center;
+        }
+
+        .ai-search-bar {
+            position: relative;
+            margin-top: 2rem;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .ai-search-bar input {
+            width: 100%;
+            padding: 1.25rem 3rem 1.25rem 1.5rem;
+            font-size: 1.25rem;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--clr-border);
+            background: var(--clr-surface);
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+        }
+
+        .ai-search-bar input:focus {
+            box-shadow: var(--shadow-xl), 0 0 0 4px var(--clr-primary-light);
+            outline: none;
+            border-color: var(--clr-primary);
+        }
+
+        .ai-search-icon {
+            position: absolute;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--clr-primary);
+            font-size: 1.5rem;
+            pointer-events: none;
+        }
+
+        /* Results UI */
+        .ai-results {
+            margin-top: 3rem;
+            text-align: left;
+            display: none;
+            animation: slideInRight 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .result-card {
+            background: var(--clr-surface);
+            border: 1px solid var(--clr-border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            margin-bottom: var(--space-md);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .result-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--clr-text);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .play-btn {
+            background: var(--clr-primary-light);
+            color: var(--clr-primary);
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .play-btn:hover {
+            background: var(--clr-primary);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--clr-bg);
+            padding: 0.25rem 0.75rem;
+            border-radius: var(--radius-full);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--clr-text-muted);
+            margin-right: 0.5rem;
+            border: 1px solid var(--clr-border);
+        }
+
+        .definition-block {
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--clr-border);
+        }
+
+        .definition-block:last-child {
+            border-bottom: none;
+        }
+
+        .def-number {
+            color: var(--clr-primary);
+            font-weight: 700;
+            margin-right: 0.5rem;
+        }
+
+        /* Fix #1: History list styles */
+        #history-list {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        #history-list li {
+            background: var(--clr-primary-light);
+            color: var(--clr-primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: var(--radius-full);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: all 0.2s;
+        }
+
+        #history-list li:hover {
+            background: var(--clr-primary);
+            color: white;
+        }
+    </style>
+</head>
+<body class="flex-col min-h-screen">
+    <!-- Fix #9: Removed duplicate mesh-bg -->
+    <div class="mesh-bg"></div>
+
+    <englisho-navbar></englisho-navbar>
+
+    <main class="container flex-1">
+        
+        <div class="ai-search-container">
+            <h1 style="font-size: 3rem; margin-bottom: 0.5rem;">What do you want to know?</h1>
+            <p class="text-muted">Search any word for an instant, AI-structured breakdown.</p>
+            
+            <div class="ai-search-bar">
+                <input type="text" id="input" placeholder="Ask anything (e.g., 'serendipity')">
+                <div class="ai-search-icon">✨</div>
+            </div>
+
+            <div id="info-text" class="text-muted mt-lg" style="margin-top: 2rem;">
+                Press Enter to search
+            </div>
+
+            <!-- AI Results Area -->
+            <div id="meaning-container" class="ai-results">
+                <div class="result-card">
+                    <div class="result-title">
+                        <span id="title">Word</span>
+                        <button id="speak-btn" class="play-btn">🔊</button>
+                    </div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <span class="tag" id="phonetic">/wɜːrd/</span>
+                        <span class="tag" id="part-of-speech">noun</span>
+                    </div>
+
+                    <div class="definition-block">
+                        <strong class="text-muted" style="display: block; margin-bottom: 0.5rem; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.05em;">AI Definition</strong>
+                        <p id="meaning" style="font-size: 1.15rem; line-height: 1.6; color: var(--clr-text);">Loading definition...</p>
+                    </div>
+
+                    <div class="definition-block">
+                        <strong class="text-muted" style="display: block; margin-bottom: 0.5rem; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.05em;">Contextual Example</strong>
+                        <p id="example" style="font-size: 1.1rem; font-style: italic; color: var(--clr-text-muted); padding-left: 1rem; border-left: 3px solid var(--clr-primary-light);">Example sentence...</p>
+                    </div>
+                    
+                    <div id="audio-group" style="display: none; margin-top: 1rem;">
+                        <audio controls id="audio"></audio>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fix #1: Added missing #history-list element referenced in dictionary.js -->
+            <div id="history-panel" style="margin-top: 2rem; text-align: left; display: none;">
+                <h3 style="font-size: 1rem; color: var(--clr-text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem;">Recent Searches</h3>
+                <ul id="history-list"></ul>
+            </div>
+
+        </div>
+
+    </main>
+
+    <englisho-footer></englisho-footer>
+
+    <script type="module" src="~/src/scripts/pages/dictionary.js"></script>
+    <script>
+        // Visual enhancement: animate search bar to top when searching
+        const inputEl = document.getElementById('input');
+        const containerEl = document.querySelector('.ai-search-container');
+        
+        inputEl.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter' && inputEl.value.trim() !== '') {
+                containerEl.style.marginTop = '2rem';
+                containerEl.querySelector('h1').style.display = 'none';
+                containerEl.querySelector('p.text-muted').style.display = 'none';
+                document.getElementById('info-text').style.display = 'none';
+                // Show history panel after first search
+                document.getElementById('history-panel').style.display = 'block';
+            }
+        });
+    </script>
+    <script type="module" src="~/src/scripts/components/Navbar.js"></script>
+    <script type="module" src="~/src/scripts/components/Footer.js"></script>
+</body>
+</html>

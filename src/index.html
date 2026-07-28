@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EnglishO - Next-Gen AI Learning</title>
+    <link rel="stylesheet" href="~/src/styles/global.css">
+    <style>
+        /* Landing Page Specific */
+        .split-hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: calc(100vh - 80px);
+            align-items: center;
+            gap: var(--space-xl);
+            padding: var(--space-xl) 0;
+        }
+
+        .hero-text {
+            padding-right: var(--space-xl);
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            line-height: 1.1;
+            margin-bottom: var(--space-md);
+            letter-spacing: -0.04em;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--clr-text-muted);
+            margin-bottom: var(--space-lg);
+            max-width: 480px;
+        }
+
+        /* 3D Art Simulation Container */
+        .hero-art {
+            position: relative;
+            height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1000px;
+        }
+
+        .glass-orb {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.4), rgba(16, 185, 129, 0.4));
+            box-shadow: inset 0 0 50px rgba(255, 255, 255, 0.8), 0 20px 40px rgba(79, 70, 229, 0.3);
+            animation: float 6s ease-in-out infinite;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            position: relative;
+            z-index: 2;
+        }
+
+        .glass-orb::after {
+            content: 'A';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 8rem;
+            font-weight: 800;
+            color: white;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        .floating-card {
+            position: absolute;
+            background: var(--clr-surface);
+            padding: var(--space-md);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-xl);
+            border: 1px solid var(--clr-border);
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            font-weight: 600;
+            animation: float 5s ease-in-out infinite alternate;
+        }
+
+        .card-1 { top: 20%; left: 10%; animation-delay: 0s; }
+        .card-2 { bottom: 20%; right: 10%; animation-delay: -2s; }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotateX(5deg) rotateY(0deg); }
+            50% { transform: translateY(-20px) rotateX(-5deg) rotateY(10deg); }
+            100% { transform: translateY(0px) rotateX(5deg) rotateY(0deg); }
+        }
+
+        /* Features Grid */
+        .features-section {
+            padding: var(--space-2xl) 0;
+            text-align: center;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-lg);
+            margin-top: var(--space-xl);
+            text-align: left;
+        }
+
+        .feature-card {
+            padding: var(--space-lg);
+            background: var(--clr-surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--clr-border);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--clr-primary-light);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--clr-primary-light);
+            color: var(--clr-primary);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: var(--space-md);
+        }
+
+        @media (max-width: 900px) {
+            .split-hero { grid-template-columns: 1fr; text-align: center; padding-top: var(--space-xl); }
+            .hero-text { padding-right: 0; }
+            .hero-subtitle { margin: 0 auto var(--space-lg); }
+            .flex { justify-content: center; }
+            .features-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="mesh-bg"></div>
+
+    <englisho-navbar></englisho-navbar>
+
+    <main class="container">
+        <!-- Hero Section -->
+        <section class="split-hero animate-fade-up">
+            <div class="hero-text">
+                <h1 class="hero-title">Master English with <br><span class="text-gradient">AI Intelligence.</span></h1>
+                <p class="hero-subtitle">Experience a handcrafted learning journey. Adaptive quizzes, AI-powered speech analysis, and real-time vocabulary mastery.</p>
+                <div class="flex gap-md">
+                    <a href="~/src/pages/core/role-select.html" class="btn btn-primary">Start Learning Free</a>
+                    <a href="~/src/pages/core/dictionary.html" class="btn btn-outline">Explore Dictionary</a>
+                </div>
+            </div>
+            
+            <div class="hero-art">
+                <div class="glass-orb"></div>
+                <div class="floating-card card-1">
+                    <span style="font-size: 1.5rem;">🎯</span> 98% Accuracy
+                </div>
+                <div class="floating-card card-2">
+                    <span style="font-size: 1.5rem;">🔥</span> 12 Day Streak!
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features-section animate-fade-up delay-200">
+            <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">A new standard in EdTech</h2>
+            <p class="text-muted" style="font-size: 1.1rem;">Powerful tools designed to accelerate fluency.</p>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎙️</div>
+                    <h3 style="margin-bottom: 0.5rem;">Speech Analysis</h3>
+                    <p class="text-muted" style="font-size: 0.95rem;">Real-time pronunciation feedback using our advanced web-native speech recognition engine.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3 style="margin-bottom: 0.5rem;">AI Dictionary</h3>
+                    <p class="text-muted" style="font-size: 0.95rem;">Instantly retrieve definitions, phonetics, and contextual examples in a beautiful interface.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎮</div>
+                    <h3 style="margin-bottom: 0.5rem;">Gamified Learning</h3>
+                    <p class="text-muted" style="font-size: 0.95rem;">Stay motivated with XP, streaks, and adaptive quizzes that adjust to your learning pace.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer-modern" style="margin-top: 5rem; padding-bottom: 3rem;">
+        <div class="container flex justify-between items-center">
+            <div class="flex items-center gap-sm">
+                <div style="width: 24px; height: 24px; background: var(--clr-text-muted); border-radius: 4px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 0.7rem;">E</div>
+                <span style="font-weight: 600; color: var(--clr-text);">EnglishO</span>
+            </div>
+            <div class="flex gap-lg">
+                <a href="#" class="nav-link">Privacy</a>
+                <a href="#" class="nav-link">Terms</a>
+                <a href="#" class="nav-link">Twitter</a>
+            </div>
+        </div>
+    </footer>
+
+<script type="module" src="~/src/scripts/components/Navbar.js"></script>
+    <script type="module" src="~/src/scripts/components/Footer.js"></script>
+</body>
+</html>
+

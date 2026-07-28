@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Child Registration - EnglishO</title>
+    <link rel="stylesheet" href="~/src/styles/global.css" />
+</head>
+<body class="flex-col items-center justify-center min-h-screen">
+    <div class="mesh-bg"></div>
+    
+    <div class="auth-wrapper w-full">
+        <div class="glass-panel auth-card fade-in-up">
+            
+            <div class="flex-col items-center mb-xl">
+                <img src="~/src/assets/icons/shieldcheckmark.svg" alt="Secure" style="width: 48px; height: 48px; margin-bottom: var(--space-md);">
+                <h2>Register Your Child</h2>
+                <p class="text-light">Add your child's details to personalize their learning experience.</p>
+            </div>
+
+            <form class="flex-col gap-md text-left w-full" onsubmit="event.preventDefault(); window.location.href='./page-of-parent.html';">
+                
+                <div class="input-group">
+                    <label class="input-label">Child's Name</label>
+                    <input class="input-field" type="text" placeholder="Enter your child's name" required />
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Child's Age</label>
+                    <input class="input-field" type="number" placeholder="Enter age (e.g., 7)" min="3" max="15" required />
+                </div>
+
+                <div class="w-full mt-lg">
+                    <button type="submit" class="btn btn-secondary w-full">Complete Registration</button>
+                </div>
+            </form>
+
+            <div class="mt-xl">
+                <button id="buttonContainer" class="btn btn-outline w-full">
+                    <img src="~/src/assets/icons/arrowbackwardcircle.svg" alt="Back" style="width: 20px; margin-right: 8px; filter: invert(0.5);">
+                    Back to Dashboard
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        var buttonContainer = document.getElementById("buttonContainer");
+        if (buttonContainer) {
+            buttonContainer.addEventListener("click", function (e) {
+                window.location.href = './page-of-parent.html';
+            });
+        }
+    </script>
+<script type="module" src="~/src/scripts/components/Navbar.js"></script>
+    <script type="module" src="~/src/scripts/components/Footer.js"></script>
+</body>
+</html>
+

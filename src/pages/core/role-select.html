@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EnglishO - Select Role</title>
+    <link rel="stylesheet" href="~/src/styles/global.css">
+    <style>
+        .role-card {
+            background: var(--clr-surface);
+            border: 2px solid var(--clr-border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .role-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .role-parent:hover {
+            border-color: var(--clr-primary);
+            background: var(--clr-primary-light);
+        }
+
+        .role-child:hover {
+            border-color: var(--clr-success);
+            background: var(--clr-success-bg);
+        }
+    </style>
+</head>
+<body class="flex-col min-h-screen">
+    <div class="mesh-bg"></div>
+
+    <englisho-navbar></englisho-navbar>
+
+    <main class="container flex-1 flex-col items-center justify-center py-xl animate-fade-up">
+        
+        <div class="text-center mb-xl">
+            <h1 style="font-size: 3rem; letter-spacing: -0.03em; margin-bottom: 0.5rem;">Who is playing today?</h1>
+            <p class="text-muted" style="font-size: 1.25rem;">Select your profile to personalize your learning journey.</p>
+        </div>
+        
+        <div class="grid grid-cols-2 gap-xl w-full" style="max-width: 800px;">
+            
+            <a href="~/src/pages/auth/sign-up.html" class="role-card role-parent">
+                <div style="font-size: 5rem; margin-bottom: var(--space-md);">👩‍👧‍👦</div>
+                <h2 class="text-primary mb-sm" style="font-size: 2rem;">I am a Parent</h2>
+                <p class="text-muted">Track progress, manage settings, and explore curriculum.</p>
+            </a>
+
+            <a href="~/src/pages/features/child-details.html" class="role-card role-child">
+                <div style="font-size: 5rem; margin-bottom: var(--space-md);">🎒</div>
+                <h2 class="text-success mb-sm" style="font-size: 2rem;">I am a Child</h2>
+                <p class="text-muted">Play games, learn words, and earn fun rewards!</p>
+            </a>
+
+        </div>
+    </main>
+
+<script type="module" src="~/src/scripts/components/Navbar.js"></script>
+    <script type="module" src="~/src/scripts/components/Footer.js"></script>
+</body>
+</html>
+

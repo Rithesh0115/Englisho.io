@@ -1,0 +1,166 @@
+{
+    "quiz": [
+        {
+            "id": "q1",
+            "question": "What does 'A' stand for?",
+            "options": [
+                {
+                    "value": "option1",
+                    "label": "Apple",
+                    "image": "apple",
+                    "isCorrect": true
+                },
+                {
+                    "value": "option2",
+                    "label": "Orange",
+                    "image": "orange",
+                    "isCorrect": false
+                },
+                {
+                    "value": "option3",
+                    "label": "Ball",
+                    "image": "ball",
+                    "isCorrect": false
+                },
+                {
+                    "value": "option4",
+                    "label": "Lion",
+                    "image": "lion",
+                    "isCorrect": false
+                }
+            ]
+        }
+    ],
+    "flashcards": [
+        {
+            "letter": "A",
+            "word": "Apple",
+            "image": "apple"
+        },
+        {
+            "letter": "B",
+            "word": "Ball",
+            "image": "ball"
+        },
+        {
+            "letter": "C",
+            "word": "Cat",
+            "image": "cat"
+        },
+        {
+            "letter": "D",
+            "word": "Dog",
+            "image": "dog"
+        },
+        {
+            "letter": "E",
+            "word": "Elephant",
+            "image": "elephant"
+        },
+        {
+            "letter": "F",
+            "word": "Frog",
+            "image": "frog"
+        },
+        {
+            "letter": "G",
+            "word": "Goat",
+            "image": "goat"
+        },
+        {
+            "letter": "H",
+            "word": "Hat",
+            "image": "hat"
+        },
+        {
+            "letter": "I",
+            "word": "Ice Cream",
+            "image": "ice_cream"
+        },
+        {
+            "letter": "J",
+            "word": "Juice",
+            "image": "juice"
+        },
+        {
+            "letter": "K",
+            "word": "Kite",
+            "image": "kite"
+        },
+        {
+            "letter": "L",
+            "word": "Lion",
+            "image": "lion"
+        },
+        {
+            "letter": "M",
+            "word": "Monkey",
+            "image": "monkey"
+        },
+        {
+            "letter": "N",
+            "word": "Nest",
+            "image": "nest"
+        },
+        {
+            "letter": "O",
+            "word": "Orange",
+            "image": "orange"
+        },
+        {
+            "letter": "P",
+            "word": "Pig",
+            "image": "pig"
+        },
+        {
+            "letter": "Q",
+            "word": "Queen",
+            "image": "queen"
+        },
+        {
+            "letter": "R",
+            "word": "Rabbit",
+            "image": "rabbit"
+        },
+        {
+            "letter": "S",
+            "word": "Ship",
+            "image": "ship"
+        },
+        {
+            "letter": "T",
+            "word": "Tree",
+            "image": "tree"
+        },
+        {
+            "letter": "U",
+            "word": "Umbrella",
+            "image": "umbrella"
+        },
+        {
+            "letter": "V",
+            "word": "Van",
+            "image": "van"
+        },
+        {
+            "letter": "W",
+            "word": "Whale",
+            "image": "whale"
+        },
+        {
+            "letter": "X",
+            "word": "Xylophone",
+            "image": "xylophone"
+        },
+        {
+            "letter": "Y",
+            "word": "Yak",
+            "image": "yak"
+        },
+        {
+            "letter": "Z",
+            "word": "Zebra",
+            "image": "zebra"
+        }
+    ]
+}
