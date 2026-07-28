@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/src/styles/global.css">
+    <title>Child Details - EnglishO</title>
+</head>
+<body class="flex-col min-h-screen">
+    <div class="mesh-bg"></div>
+    
+    <englisho-navbar></englisho-navbar>
+
+    <main class="container flex-1 flex justify-center items-center animate-fade-up py-xl">
+        <div class="card p-xl w-full" style="max-width: 450px; text-align: center; border-top: 4px solid var(--clr-success);">
+            
+            <div class="flex-col items-center mb-xl">
+                <div style="font-size: 4rem; margin-bottom: var(--space-md);">🎒</div>
+                <h2 style="font-size: 2rem; margin-bottom: 0.5rem; letter-spacing: -0.03em; color: var(--clr-text);">Who is playing?</h2>
+                <p class="text-muted">Enter your details to start your adventure!</p>
+            </div>
+
+            <div class="flex-col gap-md text-left w-full">
+                <div class="input-group">
+                    <label class="input-label" style="color: var(--clr-text);">Your Name</label>
+                    <input type="text" id="nameInput" class="input-field" placeholder="E.g., Alex" style="border-color: var(--clr-border); background: var(--clr-bg);">
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label" style="color: var(--clr-text);">Your Age</label>
+                    <input type="number" id="ageInput" class="input-field" placeholder="E.g., 8" style="border-color: var(--clr-border); background: var(--clr-bg);">
+                </div>
+
+                <div class="w-full mt-lg">
+                    <button id="startBtn" class="btn w-full" style="background: var(--clr-success); color: white; border-radius: var(--radius-full); padding: 1rem; border: none; cursor: pointer; font-weight: 600;">Start Playing!</button>
+                </div>
+            </div>
+
+            <div class="mt-xl text-center">
+                <a href="~/src/pages/core/role-select.html" class="text-muted text-sm" style="text-decoration: underline;">Go Back</a>
+            </div>
+
+        </div>
+    </main>
+
+    <englisho-footer></englisho-footer>
+
+    <!-- Fix #2: Must be type="module" so the ES import inside child-details.js works -->
+    <script type="module" src="~/src/scripts/pages/child-details.js"></script>
+<script type="module" src="~/src/scripts/components/Navbar.js"></script>
+    <script type="module" src="~/src/scripts/components/Footer.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - EnglishO</title>
+    <link rel="stylesheet" href="~/src/styles/global.css">
+    <style>
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: var(--space-xl);
+            margin-top: var(--space-lg);
+        }
+
+        .stat-card {
+            background: var(--clr-surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--clr-border);
+            padding: var(--space-lg);
+            box-shadow: var(--shadow-md);
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .stat-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .streak-icon { background: #fffbeb; color: var(--clr-warning); }
+        .xp-icon { background: #e0e7ff; color: var(--clr-primary); }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            color: var(--clr-text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+        }
+
+        /* Activity Heatmap */
+        .heatmap-container {
+            background: var(--clr-surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--clr-border);
+            padding: var(--space-lg);
+            margin-top: var(--space-lg);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .heatmap-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            margin-top: 1rem;
+        }
+
+        .heat-cell {
+            aspect-ratio: 1;
+            border-radius: 4px;
+            background: var(--clr-bg);
+            transition: transform 0.2s;
+        }
+
+        .heat-cell:hover {
+            transform: scale(1.1);
+        }
+
+        .heat-1 { background: #d1fae5; }
+        .heat-2 { background: #6ee7b7; }
+        .heat-3 { background: #10b981; }
+        .heat-4 { background: #047857; }
+
+        /* CSS Radial Progress */
+        .circular-progress {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: conic-gradient(var(--clr-primary) 75%, var(--clr-border) 0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+        
+        .circular-progress::before {
+            content: "";
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-color: var(--clr-surface);
+        }
+
+        .progress-value {
+            position: relative;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--clr-text);
+        }
+
+        @media (max-width: 900px) {
+            .dashboard-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body class="flex-col min-h-screen">
+
+    <div class="mesh-bg"></div>
+
+    <englisho-navbar></englisho-navbar>
+
+    <main class="container flex-1 py-xl animate-fade-up">
+        
+        <h1 id="welcome-message" style="font-size: 2.5rem; margin-bottom: 0.5rem;">Welcome back!</h1>
+        <p class="text-muted">Here is your learning progress for this week.</p>
+
+        <div class="dashboard-grid">
+            <!-- Left Column -->
+            <div class="flex-col gap-lg">
+                <div class="grid grid-cols-2 gap-lg">
+                    <div class="stat-card">
+                        <div class="stat-icon streak-icon">🔥</div>
+                        <div>
+                            <div id="streak-value" class="stat-value text-warning">0</div>
+                            <div class="stat-label">Day Streak</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon xp-icon">💎</div>
+                        <div>
+                            <div id="xp-value" class="stat-value text-primary">0</div>
+                            <div class="stat-label">Total XP</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="heatmap-container">
+                    <h3 style="margin-bottom: 0.5rem;">Learning Activity</h3>
+                    <p class="text-muted" style="font-size: 0.9rem;">Your daily XP earned over the last week.</p>
+                    <div class="heatmap-grid">
+                        <div class="text-center text-muted" style="font-size: 0.8rem; font-weight: 600;">Mon</div>
+                        <div class="text-center text-muted" style="font-size: 0.8rem; font-weight: 600;">Tue</div>
+                        <div class="text-center text-muted" style="font-size: 0.8rem; font-weight: 600;">Wed</div>
+                        <div class="text-center text-muted" style="font-size: 0.8rem; font-weight: 600;">Thu</div>
+                        <div class="text-center text-muted" style="font-size: 0.8rem; font-weight: 600;">Fri</div>
+                        <div class="text-center text-muted" style="font-size: 0.8rem; font-weight: 600;">Sat</div>
+                        <div class="text-center text-muted" style="font-size: 0.8rem; font-weight: 600;">Sun</div>
+                        
+                        <div class="heat-cell heat-3"></div>
+                        <div class="heat-cell heat-1"></div>
+                        <div class="heat-cell heat-4"></div>
+                        <div class="heat-cell heat-2"></div>
+                        <div class="heat-cell"></div>
+                        <div class="heat-cell heat-1"></div>
+                        <div class="heat-cell heat-3"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="flex-col gap-lg">
+                <div class="card p-xl text-center">
+                    <h3 style="margin-bottom: 2rem;">Weekly Goal</h3>
+                    <div class="circular-progress" id="goal-progress">
+                        <span class="progress-value" id="goal-value">0%</span>
+                    </div>
+                    <p class="text-muted" style="margin-top: 1.5rem; font-weight: 500;">You're almost there! Complete 1 more lesson to reach your goal.</p>
+                    <a href="~/src/pages/features/quizz/quiz.html" class="btn btn-primary w-full mt-lg">Continue Learning</a>
+                </div>
+            </div>
+        </div>
+        
+    </main>
+
+<script type="module" src="~/src/scripts/components/Navbar.js"></script>
+    <script type="module" src="~/src/scripts/components/Footer.js"></script>
+    <script type="module">
+        import { SessionManager } from '~/src/scripts/services/SessionManager.js';
+        import { GamificationService } from '~/src/scripts/services/GamificationService.js';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = SessionManager.getUser();
+            if (user) {
+                document.getElementById('welcome-message').innerText = `Welcome back, ${user.name}!`;
+            }
+
+            const stats = GamificationService.getStats();
+            document.getElementById('xp-value').innerText = stats.xp.toLocaleString();
+            document.getElementById('streak-value').innerText = stats.streak.toLocaleString();
+            
+            const goalPercentage = Math.min(100, (stats.completedLessons % 5) * 20);
+            document.getElementById('goal-value').innerText = `${goalPercentage}%`;
+            document.getElementById('goal-progress').style.background = `conic-gradient(var(--clr-primary) ${goalPercentage}%, var(--clr-border) 0)`;
+        });
+    </script>
+</body>
+</html>
+

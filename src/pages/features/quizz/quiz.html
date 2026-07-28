@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gamified Quiz - EnglishO</title>
+    <link rel="stylesheet" href="~/src/styles/global.css">
+    <style>
+        .quiz-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        /* Progress Bar (Duolingo style) */
+        .progress-track {
+            flex: 1;
+            height: 16px;
+            background: var(--clr-border);
+            border-radius: var(--radius-full);
+            margin: 0 1.5rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            position: absolute;
+            top: 0; left: 0; height: 100%;
+            background: var(--clr-success);
+            width: 0%;
+            border-radius: var(--radius-full);
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Highlight strip */
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 5px;
+            right: 5px;
+            height: 4px;
+            background: rgba(255,255,255,0.4);
+            border-radius: var(--radius-full);
+        }
+
+        .stats-pill {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--clr-surface);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--clr-border);
+            font-weight: 800;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .quiz-option {
+            cursor: pointer;
+            border: 2px solid var(--clr-border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-md);
+            background: var(--clr-surface);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 4px 0 var(--clr-border);
+        }
+        
+        .quiz-option:hover {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 var(--clr-border);
+            background: var(--clr-bg);
+        }
+
+        .quiz-option.selected {
+            border-color: var(--clr-primary);
+            background: var(--clr-primary-light);
+            color: var(--clr-primary);
+            box-shadow: 0 4px 0 rgba(79, 70, 229, 0.5);
+        }
+        
+        .quiz-option.selected:hover {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 rgba(79, 70, 229, 0.5);
+        }
+
+        .quiz-option input[type="radio"] {
+            display: none;
+        }
+
+        .quiz-option img {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            margin-bottom: var(--space-sm);
+            border-radius: var(--radius-sm);
+        }
+
+        /* Success overlay */
+        .success-overlay {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            background: var(--clr-success-bg);
+            border-top: 2px solid var(--clr-success);
+            padding: var(--space-lg);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transform: translateY(100%);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 100;
+        }
+        .success-overlay.active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="flex-col min-h-screen">
+
+    <div class="mesh-bg"></div>
+
+    <main class="container flex-1 py-xl flex-col items-center">
+        
+        <!-- Header / Progress -->
+        <div class="quiz-header animate-fade-up">
+            <button class="btn btn-outline" onclick="window.history.back();" style="border-radius: var(--radius-full); padding: 0.5rem 1rem;">
+                ✕ Quit
+            </button>
+            <div class="progress-track">
+                <div class="progress-fill" id="progress-bar"></div>
+            </div>
+            <div class="stats-pill" style="color: var(--clr-warning);">
+                🔥 <span id="streak-display">0</span>
+            </div>
+        </div>
+
+        <div class="w-full animate-fade-up" style="max-width: 800px; margin-top: 2rem;">
+            
+            <div id="quiz-container" class="flex-col gap-xl">
+                <!-- Dynamically loaded questions -->
+            </div>
+
+            <!-- Submission Area -->
+            <div class="mt-xl text-center pt-xl">
+                <button type="button" class="btn btn-primary w-full" style="padding: 1rem; font-size: 1.25rem; border-radius: var(--radius-full); box-shadow: 0 4px 0 var(--clr-primary-hover);" onclick="checkAnswers()">Check Answer</button>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Success Overlay -->
+    <div class="success-overlay" id="success-overlay">
+        <div class="container flex justify-between items-center">
+            <div class="flex items-center gap-md">
+                <div style="font-size: 2.5rem; background: white; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; color: var(--clr-success);">✓</div>
+                <div>
+                    <h2 style="color: var(--clr-success); margin: 0; font-size: 1.8rem;">Excellent!</h2>
+                    <p style="color: var(--clr-success-hover); margin: 0; font-weight: 600;">You earned +15 XP</p>
+                </div>
+            </div>
+            <button class="btn btn-primary" onclick="window.location.reload();" style="border-radius: var(--radius-full); background: var(--clr-success); font-size: 1.2rem; padding: 1rem 2rem; box-shadow: 0 4px 0 var(--clr-success-hover);">
+                CONTINUE
+            </button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { GamificationService } from '~/src/scripts/services/GamificationService.js';
+        import curriculumData from '~/src/data/curriculum.json';
+        import { imageMap } from '~/src/data/images.js';
+
+        // Fix #5: Store the correct answer value so checkAnswers() can validate it
+        let correctAnswerValue = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const stats = GamificationService.getStats();
+            document.getElementById('streak-display').innerText = stats.streak;
+
+            // Load Quiz
+            const container = document.getElementById('quiz-container');
+            const flashcards = curriculumData.flashcards;
+            
+            // Pick 1 correct answer randomly
+            const correctIndex = Math.floor(Math.random() * flashcards.length);
+            const correctCard = flashcards[correctIndex];
+            
+            // Pick 3 wrong answers
+            const wrongOptions = [];
+            while (wrongOptions.length < 3) {
+                const randomIdx = Math.floor(Math.random() * flashcards.length);
+                if (randomIdx !== correctIndex && !wrongOptions.includes(flashcards[randomIdx])) {
+                    wrongOptions.push(flashcards[randomIdx]);
+                }
+            }
+
+            // Combine and shuffle
+            let options = [
+                { value: 'correct', label: correctCard.word, image: correctCard.image, isCorrect: true },
+                ...wrongOptions.map((w, i) => ({ value: 'wrong' + i, label: w.word, image: w.image, isCorrect: false }))
+            ];
+            options.sort(() => Math.random() - 0.5);
+
+            const q = {
+                id: 'q_dynamic',
+                question: `What does '${correctCard.letter}' stand for?`,
+                options: options
+            };
+
+            correctAnswerValue = 'correct';
+            
+            let optionsHtml = '';
+            q.options.forEach((opt) => {
+                optionsHtml += `
+                    <label class="quiz-option" onclick="selectOption(this, '${q.id}')">
+                        <input type="radio" name="${q.id}" value="${opt.value}" data-correct="${opt.isCorrect}">
+                        <img src="${imageMap[opt.image] || imageMap.logo}" alt="${opt.label}">
+                    </label>
+                `;
+            });
+
+            container.innerHTML = `
+                <div class="question-block" id="${q.id}">
+                    <h2 class="text-text mb-lg text-center" style="font-size: 2rem; font-weight: 800;">${q.question}</h2>
+                    <div class="grid grid-cols-2 gap-md">
+                        ${optionsHtml}
+                    </div>
+                </div>
+            `;
+        });
+
+        window.selectOption = function(labelElement, groupName) {
+            const allInputs = document.querySelectorAll(`input[name="${groupName}"]`);
+            allInputs.forEach(input => {
+                input.parentElement.classList.remove('selected');
+                input.parentElement.style.borderColor = '';
+                input.parentElement.style.background = '';
+            });
+            labelElement.classList.add('selected');
+            document.getElementById('progress-bar').style.width = '33%';
+        };
+
+        window.checkAnswers = function() {
+            // Fix #5: Find the selected radio and validate it
+            const selectedInput = document.querySelector(`input[type="radio"]:checked`);
+
+            if (!selectedInput) {
+                // No option selected — shake the button as a hint
+                const btn = document.querySelector('[onclick="checkAnswers()"]');
+                btn.style.animation = 'none';
+                setTimeout(() => {
+                    btn.style.animation = '';
+                }, 10);
+                alert('Please select an answer!');
+                return;
+            }
+
+            const isCorrect = selectedInput.dataset.correct === 'true';
+
+            if (isCorrect) {
+                // Award XP and show success overlay
+                const newStats = GamificationService.addXP(15);
+                document.getElementById('streak-display').innerText = newStats.streak;
+                document.getElementById('progress-bar').style.width = '100%';
+                document.getElementById('success-overlay').classList.add('active');
+            } else {
+                // Wrong answer — highlight selected label red, correct label green
+                selectedInput.parentElement.style.borderColor = 'var(--clr-danger)';
+                selectedInput.parentElement.style.background = '#fee2e2';
+
+                // Show correct option in green
+                const allInputs = document.querySelectorAll('input[type="radio"]');
+                allInputs.forEach(inp => {
+                    if (inp.dataset.correct === 'true') {
+                        inp.parentElement.style.borderColor = 'var(--clr-success)';
+                        inp.parentElement.style.background = 'var(--clr-success-bg)';
+                    }
+                });
+            }
+        };
+    </script>
+<script type="module" src="~/src/scripts/components/Navbar.js"></script>
+    <script type="module" src="~/src/scripts/components/Footer.js"></script>
+</body>
+</html>
+

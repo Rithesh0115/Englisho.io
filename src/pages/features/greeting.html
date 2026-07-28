@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/src/styles/global.css">
+    <title>Welcome - EnglishO</title>
+    <style>
+        .greeting-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: var(--space-xl);
+        }
+        .greeting-card {
+            text-align: center;
+            max-width: 550px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="flex-col min-h-screen">
+    <div class="mesh-bg"></div>
+    <div class="greeting-wrapper">
+        <div class="glass-panel card greeting-card animate-fade-up" style="padding: var(--space-2xl);">
+            <div style="font-size: 5rem; margin-bottom: var(--space-md);">🎉</div>
+            <h1 class="text-gradient mb-lg" style="font-size: 3rem;">Hello <span id="userName">there</span>!</h1>
+            <p class="text-muted mb-xl" style="font-size: 1.2rem;">Welcome to EnglishO. Are you ready to start your learning adventure?</p>
+            <a href="~/src/pages/features/flashcards/alphabet.html" class="btn btn-primary" style="font-size: 1.1rem; padding: 0.9rem 3rem; border-radius: var(--radius-full);">Let's Start Learning ➔</a>
+        </div>
+    </div>
+
+    <!-- Fix #3: Read from SessionManager's correct key, not the missing 'userName' key -->
+    <script type="module">
+        import { SessionManager } from '~/src/scripts/services/SessionManager.js';
+        const user = SessionManager.getUser();
+        document.getElementById('userName').textContent = user ? user.name : 'there';
+    </script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - EnglishO</title>
+    <link rel="stylesheet" href="~/src/styles/global.css">
+    <style>
+        .contact-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-2xl);
+            align-items: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .contact-form-card {
+            background: var(--clr-surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--clr-border);
+            padding: var(--space-xl);
+            box-shadow: var(--shadow-lg);
+        }
+
+        @media (max-width: 900px) {
+            .contact-layout { grid-template-columns: 1fr; gap: var(--space-xl); }
+        }
+    </style>
+</head>
+<body class="flex-col min-h-screen">
+    <div class="mesh-bg"></div>
+
+    <englisho-navbar></englisho-navbar>
+
+    <main class="container flex-1 py-xl animate-fade-up flex items-center">
+        
+        <div class="contact-layout">
+            <div>
+                <h1 style="font-size: 3.5rem; letter-spacing: -0.03em; margin-bottom: 1rem;">Get in touch</h1>
+                <p class="text-muted" style="font-size: 1.25rem; margin-bottom: 2rem;">Whether you have a question about features, pricing, or anything else, our team is ready to answer all your questions.</p>
+                
+                <div class="flex-col gap-md">
+                    <div class="flex items-center gap-md">
+                        <div style="width: 48px; height: 48px; background: var(--clr-primary-light); color: var(--clr-primary); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">📍</div>
+                        <div>
+                            <h4 style="margin: 0; font-size: 1.1rem;">Location</h4>
+                            <span class="text-muted">Bangalore, India</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-md">
+                        <div style="width: 48px; height: 48px; background: var(--clr-primary-light); color: var(--clr-primary); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">✉️</div>
+                        <div>
+                            <h4 style="margin: 0; font-size: 1.1rem;">Email</h4>
+                            <span class="text-muted">support@englisho.io</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-form-card">
+                <form class="flex-col gap-md text-left w-full" onsubmit="event.preventDefault(); alert('Message sent successfully!');">
+                    <div class="input-group">
+                        <label class="input-label">Full Name</label>
+                        <input class="input-field" type="text" placeholder="Jane Doe" required />
+                    </div>
+                    
+                    <div class="input-group">
+                        <label class="input-label">Email Address</label>
+                        <input class="input-field" type="email" placeholder="jane@company.com" required />
+                    </div>
+
+                    <div class="input-group">
+                        <label class="input-label">Message</label>
+                        <textarea class="input-field" placeholder="How can we help you?" rows="4" style="resize: vertical;" required></textarea>
+                    </div>
+
+                    <div class="w-full mt-sm">
+                        <button type="submit" class="btn btn-primary w-full" style="border-radius: var(--radius-full); padding: 1rem;">Send Message</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </main>
+
+    <englisho-footer></englisho-footer>
+
+<script type="module" src="~/src/scripts/components/Navbar.js"></script>
+    <script type="module" src="~/src/scripts/components/Footer.js"></script>
+</body>
+</html>
+

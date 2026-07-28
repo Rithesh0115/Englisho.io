@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Platform - EnglishO</title>
+    <!-- Font Awesome CDN-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="~/src/styles/global.css">
+    <style>
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-xl);
+            margin-top: var(--space-xl);
+        }
+        
+        .service-card {
+            background: var(--clr-surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--clr-border);
+            padding: var(--space-xl) var(--space-lg);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--clr-primary-light);
+        }
+
+        .service-icon-wrapper {
+            width: 80px;
+            height: 80px;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: var(--space-lg);
+        }
+
+        @media (max-width: 900px) {
+            .service-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body class="flex-col min-h-screen">
+    <div class="mesh-bg"></div>
+
+    <englisho-navbar></englisho-navbar>
+
+    <main class="container flex-1 py-xl animate-fade-up">
+        
+        <div class="text-center mb-xl">
+            <h1 style="font-size: 3.5rem; letter-spacing: -0.03em;">The EnglishO Platform</h1>
+            <p class="text-muted" style="font-size: 1.25rem; max-width: 600px; margin: 0 auto;">A complete suite of AI-powered tools designed to accelerate English fluency for modern learners.</p>
+        </div>
+
+        <div class="service-grid">
+            
+            <div class="service-card">
+                <div class="service-icon-wrapper" style="background: var(--clr-primary-light); color: var(--clr-primary);">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">AI Dictionary</h3>
+                <p class="text-muted flex-1" style="margin-bottom: 1.5rem;">Instant contextual definitions, phonetic breakdowns, and intelligent examples in a distraction-free interface.</p>
+                <a href="~/src/pages/core/dictionary.html" class="btn btn-primary w-full" style="border-radius: var(--radius-full);">Launch Dictionary</a>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon-wrapper" style="background: #e0f2fe; color: #0284c7;">
+                    <i class="fas fa-wave-square"></i>
+                </div>
+                <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Voice Studio</h3>
+                <p class="text-muted flex-1" style="margin-bottom: 1.5rem;">Convert written text into natural, native-sounding speech with adjustable accents and real-time visualization.</p>
+                <a href="~/src/pages/features/text.html" class="btn btn-outline w-full" style="border-radius: var(--radius-full);">Open Studio</a>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon-wrapper" style="background: #fce7f3; color: #db2777;">
+                    <i class="fas fa-microphone-alt"></i>
+                </div>
+                <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Focus Recording</h3>
+                <p class="text-muted flex-1" style="margin-bottom: 1.5rem;">Practice pronunciation with our real-time speech analysis engine and instant confidence scoring.</p>
+                <a href="~/src/pages/features/speech.html" class="btn btn-outline w-full" style="border-radius: var(--radius-full);">Start Recording</a>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon-wrapper" style="background: #fef3c7; color: #d97706;">
+                    <i class="fas fa-clone"></i>
+                </div>
+                <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Visual Alphabet</h3>
+                <p class="text-muted flex-1" style="margin-bottom: 1.5rem;">Interactive 3D flashcards that make fundamental vocabulary retention engaging and effortless.</p>
+                <a href="~/src/pages/features/flashcards/alphabet.html" class="btn btn-outline w-full" style="border-radius: var(--radius-full);">View Flashcards</a>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon-wrapper" style="background: var(--clr-success-bg); color: var(--clr-success);">
+                    <i class="fas fa-gamepad"></i>
+                </div>
+                <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Adaptive Quizzes</h3>
+                <p class="text-muted flex-1" style="margin-bottom: 1.5rem;">Test your knowledge in a gamified environment. Earn XP, build streaks, and conquer leaderboards.</p>
+                <a href="~/src/pages/features/quizz/quiz.html" class="btn btn-outline w-full" style="border-radius: var(--radius-full);">Start Quiz</a>
+            </div>
+
+            <div class="service-card" style="opacity: 0.6; border-style: dashed;">
+                <div class="service-icon-wrapper" style="background: var(--clr-bg); color: var(--clr-text-muted);">
+                    <i class="fas fa-sparkles"></i>
+                </div>
+                <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">More Coming Soon</h3>
+                <p class="text-muted flex-1" style="margin-bottom: 1.5rem;">Our engineering team is constantly developing new features to accelerate your learning.</p>
+                <button class="btn btn-outline w-full" disabled style="border-radius: var(--radius-full); cursor: not-allowed; opacity: 0.5;">In Development</button>
+            </div>
+
+        </div>
+
+    </main>
+
+    <englisho-footer></englisho-footer>
+
+<script type="module" src="~/src/scripts/components/Navbar.js"></script>
+    <script type="module" src="~/src/scripts/components/Footer.js"></script>
+</body>
+</html>
+
